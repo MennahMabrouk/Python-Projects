@@ -1,0 +1,3 @@
+Fortune Cookies
+Fortune Cookies is a simple Python project suitable for beginners who are familiar with variables, if statements, else, comparison, and random modules. 
+This project generates a random number between 1 and 100 and a random fortune message from a list of 10 possibilities.
