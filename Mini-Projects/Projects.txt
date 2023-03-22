@@ -1,3 +1,11 @@
-Fortune Cookies
-Fortune Cookies is a simple Python project suitable for beginners who are familiar with variables, if statements, else, comparison, and random modules. 
-This project generates a random number between 1 and 100 and a random fortune message from a list of 10 possibilities.
+This repository contains a collection of Python projects that I have created. Here's a brief description of each project:
+
+Basic Calculator: This is a basic calculator program that allows you to perform addition, subtraction, multiplication, and division operations.
+
+Email Sender: This program allows you to send emails using Python's built-in smtplib module. You can specify the recipient's email address, subject, and message.
+
+Email Slicer: This program allows you to slice an email address into its username and domain name.
+
+Word Replacement: This program allows you to replace specific words in a text file. You can specify the input file, output file, and the words you want to replace.
+
+Fortune Cookies: This program displays random fortunes .
