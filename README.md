@@ -54,3 +54,6 @@ python snake.py
 To use these projects, simply clone the repository to your local machine and run the Python files using your favorite Python IDE or the command line. For the Snake Game, make sure you have the Pygame library installed on your machine.
 
 Feel free to explore each project and provide any feedback or suggestions. Thank you for visiting my repository!
+
+![2a888ac55b8c07dd5a18be6e03fe988a](https://user-images.githubusercontent.com/101124995/226927296-a78bb70e-f0f8-4713-9776-c0f6ff91ce83.jpg)
+
