@@ -50,7 +50,7 @@ Navigate to the directory containing the game files and run the following comman
 python snake.py
 ```
 *************
-# How to Use
+## How to Use
 To use these projects, simply clone the repository to your local machine and run the Python files using your favorite Python IDE or the command line. For the Snake Game, make sure you have the Pygame library installed on your machine.
 
 Feel free to explore each project and provide any feedback or suggestions. Thank you for visiting my repository!
