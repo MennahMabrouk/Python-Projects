@@ -2,8 +2,8 @@
 *************
 
 ## Acknowledgements
-This game was built following a tutorial by FreeCodeCamp.org.
-Welcome to my GitHub repository! This repository contains two folders: mini-projects and snake-game. The mini-projects folder contains a collection of small Python projects, while the snake-game folder contains a classic Snake Game implemented in Python using the Pygame library.
+These projects was built following a tutorial by 'FreeCodeCamp.org'.
+This repository contains two folders: mini-projects and snake-game. The mini-projects folder contains a collection of small Python projects, while the snake-game folder contains a classic Snake Game implemented in Python using the Pygame library.
 
 *************
 ## Mini Projects
