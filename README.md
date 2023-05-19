@@ -1,12 +1,15 @@
 # Python-Projects
 <img src="https://github.com/MennahMabrouk/Python-Projects/assets/101124995/5c244f6b-1976-4bac-a485-30abbef620cd" width="300" height="200">
+## College Projects 
+
+
 
 
 
 ![m](https://user-images.githubusercontent.com/101124995/226924957-24d433c7-907c-46d7-851c-00546a6b17e7.jpg)
 
 ## Acknowledgements
-These projects was built following a tutorial by `FreeCodeCamp.org`.
+Following projects was built following a tutorial by `FreeCodeCamp.org`.
 
 *************
 ## Mini Projects
