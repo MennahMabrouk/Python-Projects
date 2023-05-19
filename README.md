@@ -17,6 +17,7 @@
 🧠The recommended cities and the merged DataFrame are printed</p>
 
 
+*************
 
 ![m](https://user-images.githubusercontent.com/101124995/226924957-24d433c7-907c-46d7-851c-00546a6b17e7.jpg)
 
