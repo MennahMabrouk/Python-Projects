@@ -1,5 +1,5 @@
 # Python-Projects
-![2a888ac55b8c07dd5a18be6e03fe988a](https://github.com/MennahMabrouk/Python-Projects/assets/101124995/5c244f6b-1976-4bac-a485-30abbef620cd)
+<img src="https://github.com/MennahMabrouk/Python-Projects/assets/101124995/5c244f6b-1976-4bac-a485-30abbef620cd" width="300" height="400">
 
 
 
