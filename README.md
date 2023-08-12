@@ -114,7 +114,7 @@ The normal game you know under discribtion of:
 * Aim is to ensure the functionality and effectiveness of the tool.
 
 <img src="![DrSTONE_science-user](https://github.com/MennahMabrouk/Python-Projects/assets/101124995/162c8a75-8fd9-4271-b6bd-b45baa7402dd)
-" width="300" height="200">
+" width="400" height="300">
 ************* 
 ## How to Use
 To use these projects, simply clone the repository to your local machine and run the Python files using your favorite Python IDE or the command line. For the Snake Game, make sure you have the Pygame library installed on your machine.
