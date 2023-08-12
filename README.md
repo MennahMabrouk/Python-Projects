@@ -94,7 +94,10 @@ The normal game you know under discribtion of:
 ✨Update the game board and check for a win or tie condition.<br>
 ✨If met, end the loop and display the appropriate message.<br>
 </p>
+
 *************
+
+
 ###  Automated EDA
 * Develop an Automated EDA (Exploratory Data Analysis) tool using Python.
 * The tool simplifies EDA by automating data preprocessing and visualization.
