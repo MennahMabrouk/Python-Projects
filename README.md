@@ -70,28 +70,30 @@ python snake.py
 ```
 *************
 ## Tic Tac Toe
-✨The normal game you know under discribtion of:
-✨Build a command-line Tic Tac Toe game using Python without a GUI.
-✨Implement game logic using Python's built-in data structures and control flow.
-✨Players input their moves as text in the command line.
-✨The game is played on a 3x3 grid.
-✨Initialize the game board as a 3x3 list of lists, with each element representing a square on the board, initially set to an empty string.
-✨Create a function to print the current game board to the console using loops to iterate through rows and columns.
-✨Develop a function to handle player moves:
-✨Accept the game board and the current player's symbol as parameters.
-✨Use input() to prompt the player for their move.
-✨Update the game board with the player's symbol in the chosen square.
-✨Create a function to check for a win:
-✨Accept the game board and the current player's symbol as parameters.
-✨Check rows, columns, and diagonals for three matching symbols in a row.
-✨Implement a function to check for a tie:
-✨Accept the game board as a parameter.
-✨Verify if all squares on the board are filled.
-✨Set up the main game loop:
-✨Alternate between players in each iteration.
-✨Display the current game board and prompt the current player for their move.
-✨Update the game board and check for a win or tie condition.
-✨If met, end the loop and display the appropriate message.
+<p>
+The normal game you know under discribtion of:
+✨Build a command-line Tic Tac Toe game using Python without a GUI.<br>
+✨Implement game logic using Python's built-in data structures and control flow.<br>
+✨Players input their moves as text in the command line.<br>
+✨The game is played on a 3x3 grid.<br>
+✨Initialize the game board as a 3x3 list of lists, with each element representing a square on the board, initially set to an empty string.<br>
+✨Create a function to print the current game board to the console using loops to iterate through rows and columns.<br>
+✨Develop a function to handle player moves<br>
+✨Accept the game board and the current player's symbol as parameters.<br>
+✨Use input() to prompt the player for their move.<br>
+✨Update the game board with the player's symbol in the chosen square.<br>
+✨Create a function to check for a win<br>
+✨Accept the game board and the current player's symbol as parameters.<br>
+✨Check rows, columns, and diagonals for three matching symbols in a row.<br>
+✨Implement a function to check for a tie<br>
+✨Accept the game board as a parameter.<br>
+✨Verify if all squares on the board are filled.<br>
+✨Set up the main game loop<br>
+✨Alternate between players in each iteration.<br>
+✨Display the current game board and prompt the current player for their move.<br>
+✨Update the game board and check for a win or tie condition.<br>
+✨If met, end the loop and display the appropriate message.<br>
+</p>
 *************
 ###  Automated EDA
 * Develop an Automated EDA (Exploratory Data Analysis) tool using Python.
