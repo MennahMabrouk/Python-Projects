@@ -113,7 +113,7 @@ The normal game you know under discribtion of:
 * Involves stages of designing, implementing, testing, and debugging.
 * Aim is to ensure the functionality and effectiveness of the tool.
 
-<img src="![DrSTONE_science-user](https://github.com/MennahMabrouk/Python-Projects/assets/101124995/b54ad996-7787-4923-9a68-9a6e3d38f666)
+<img src="![DrSTONE_science-user](https://github.com/MennahMabrouk/Python-Projects/assets/101124995/162c8a75-8fd9-4271-b6bd-b45baa7402dd)
 " width="300" height="200">
 ************* 
 ## How to Use
