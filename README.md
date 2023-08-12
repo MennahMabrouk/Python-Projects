@@ -69,6 +69,45 @@ Navigate to the directory containing the game files and run the following comman
 python snake.py
 ```
 *************
+## Tic Tac Toe
+✨The normal game you know under discribtion of:
+✨Build a command-line Tic Tac Toe game using Python without a GUI.
+✨Implement game logic using Python's built-in data structures and control flow.
+✨Players input their moves as text in the command line.
+✨The game is played on a 3x3 grid.
+✨Initialize the game board as a 3x3 list of lists, with each element representing a square on the board, initially set to an empty string.
+✨Create a function to print the current game board to the console using loops to iterate through rows and columns.
+✨Develop a function to handle player moves:
+✨Accept the game board and the current player's symbol as parameters.
+✨Use input() to prompt the player for their move.
+✨Update the game board with the player's symbol in the chosen square.
+✨Create a function to check for a win:
+✨Accept the game board and the current player's symbol as parameters.
+✨Check rows, columns, and diagonals for three matching symbols in a row.
+✨Implement a function to check for a tie:
+✨Accept the game board as a parameter.
+✨Verify if all squares on the board are filled.
+✨Set up the main game loop:
+✨Alternate between players in each iteration.
+✨Display the current game board and prompt the current player for their move.
+✨Update the game board and check for a win or tie condition.
+✨If met, end the loop and display the appropriate message.
+*************
+###  Automated EDA
+* Develop an Automated EDA (Exploratory Data Analysis) tool using Python.
+* The tool simplifies EDA by automating data preprocessing and visualization.
+* Supports various data formats: CSV, Excel, and SQL databases.
+* Identifies column data types and performs appropriate preprocessing steps.
+* Preprocessing includes handling missing values, encoding categories, scaling numerical features, etc.
+* Provides options for feature selection and dimensionality reduction.
+* Focuses on facilitating analysis of large datasets.
+* Generates comprehensive visualization dashboards for each column type.
+* Visualization types include histograms, box plots, scatter plots, and more.
+* Utilizes Python libraries: Matplotlib, Seaborn, and Plotly for interactive visualizations.
+* Offers user-friendly command-line interface.
+* Involves stages of designing, implementing, testing, and debugging.
+* Aim is to ensure the functionality and effectiveness of the tool.
+************* 
 ## How to Use
 To use these projects, simply clone the repository to your local machine and run the Python files using your favorite Python IDE or the command line. For the Snake Game, make sure you have the Pygame library installed on your machine.
 
