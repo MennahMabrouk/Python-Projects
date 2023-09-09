@@ -1,0 +1,50 @@
+from pycaret.classification import setup
+clf = setup(data=heart_data, target='cp', session_id=123, normalize=True, 
+            transformation=True)
+
+from pycaret.classification import setup, compare_models, tune_model
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.pipeline import Pipeline
+
+
+# Perform feature selection (you can choose a different method)
+best_features = compare_models(fold=5, sort='F1')
+
+# Create a custom pipeline with feature selection and Logistic Regression
+pipeline = Pipeline([
+    ('select', SelectKBest(score_func=f_classif)),
+    ('lr', LogisticRegression())
+])
+
+# Define a custom grid for hyperparameter tuning
+param_grid = {
+    'select__k': [1, 2, 3, 4, 5],  # Adjust the number of selected features
+    'lr__C': [0.001, 0.01, 0.1, 1, 10],  # Adjust regularization strength
+}
+
+# Tune the custom pipeline with the custom grid
+tuned_lr = tune_model(pipeline, custom_grid=param_grid)
+
+from pycaret.classification import create_model, blend_models, stack_models
+
+# Create and train multiple models
+model1 = create_model('lr')  
+model2 = create_model('rf')  
+model3 = create_model('xgboost')  
+
+# Blend the models
+blended_model = blend_models(estimator_list=[model1, model2, model3])
+
+# Stack the models
+stacked_model = stack_models(estimator_list=[model1, model2], meta_model=model3)
+
+from pycaret.classification import tune_model
+
+# Tune the model using the 'random' tuner without specifying a search library
+tuned_model = tune_model(blended_model, n_iter=10)
+
+from pycaret.classification import evaluate_model
+
+evaluate_model(tuned_model)
+
