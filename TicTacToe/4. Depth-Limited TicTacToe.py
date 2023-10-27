@@ -10,27 +10,19 @@ YELLOW = (255, 255, 0)
 # Initialize pygame
 pygame.init()
 
-# Set up the game window
 WINDOW_SIZE = (400, 450)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Tic Tac Toe")
-
-# Set up the game board
 BOARD_SIZE = 3
 board = [["" for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 
-# Set up the fonts
 score_font = pygame.font.Font(None, 30)
 reset_font = pygame.font.Font(None, 24)
 
-# Variable to keep track of the current player's turn
 turn = "X"
-
-# Variables to keep track of player scores
 score_X = 0
 score_O = 0
 
-# Function to draw the score panel and reset button
 def draw_score_panel():
     score_panel_rect = pygame.Rect(0, 0, WINDOW_SIZE[0], 40)
     pygame.draw.rect(screen, PURPLE, score_panel_rect)
@@ -43,7 +35,6 @@ def draw_score_panel():
     reset_text = reset_font.render("Reset", True, PURPLE)
     screen.blit(reset_text, (WINDOW_SIZE[0] - 75, 12))
 
-# Function to draw the game board
 def draw_board():
     screen.fill(PURPLE)
     draw_grid()
@@ -55,7 +46,6 @@ def draw_board():
             elif board[row][col] == "O":
                 draw_o(col * WINDOW_SIZE[0] // BOARD_SIZE, row * WINDOW_SIZE[1] // BOARD_SIZE)
 
-# Function to draw the grid lines
 def draw_grid():
     for i in range(1, BOARD_SIZE):
         pygame.draw.line(screen, WHITE, (i * WINDOW_SIZE[0] // BOARD_SIZE, 0), (i * WINDOW_SIZE[0] // BOARD_SIZE, WINDOW_SIZE[1]), 3)
@@ -79,7 +69,6 @@ def draw_o(x, y):
     center_y = y + WINDOW_SIZE[1] // (2 * BOARD_SIZE)
     pygame.draw.circle(screen, WHITE, (center_x, center_y), radius, 3)
 
-# Function to check for a win
 def check_win(board, player):
     for i in range(BOARD_SIZE):
         if all(board[i][j] == player for j in range(BOARD_SIZE)):
@@ -92,11 +81,9 @@ def check_win(board, player):
         return True
     return False
 
-# Function to check for a tie
 def check_tie(board):
     return all(board[i][j] != "" for i in range(BOARD_SIZE) for j in range(BOARD_SIZE))
 
-# Function to reset the game
 def reset_game():
     global board, turn
     board = [["" for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
@@ -118,7 +105,7 @@ def computer_move_dls():
             row, col = cell
             board[row][col] = "O"
             score = minimax_dls(board, 0, False)
-            board[row][col] = ""  # Reset the cell
+            board[row][col] = ""  
 
             if score > best_score:
                 best_score = score
@@ -130,8 +117,7 @@ def computer_move_dls():
 
 def minimax_dls(board, depth, is_maximizing):
     if depth == DEPTH_LIMIT:
-        return 0  # Apply a heuristic evaluation at the depth limit
-    
+        return 0 
     if check_win(board, "O"):
         return 1
     if check_win(board, "X"):
