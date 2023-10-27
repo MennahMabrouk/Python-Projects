@@ -151,10 +151,10 @@ def iddfs(board, player):
             if board[i][j] == "":
                 if player == "O":
                     board[i][j] = "O"
-                    cost = UCS_search(board, "X")
+                    cost = iddfs(board, "X")
                 else:
                     board[i][j] = "X"
-                    cost = UCS_search(board, "O")
+                    cost = iddfs(board, "O")
                 board[i][j] = ""  # Reset the cell
 
                 if player == "O" and cost < best_cost:
