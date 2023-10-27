@@ -2,12 +2,10 @@ import pygame
 import sys
 from collections import deque
 
-# Define colors
 WHITE = (255, 255, 255)
 PURPLE = (128, 0, 128)
 YELLOW = (255, 255, 0)
 
-# Initialize pygame
 pygame.init()
 
 WINDOW_SIZE = (400, 450)
@@ -51,7 +49,6 @@ def draw_grid():
         pygame.draw.line(screen, WHITE, (i * WINDOW_SIZE[0] // BOARD_SIZE, 0), (i * WINDOW_SIZE[0] // BOARD_SIZE, WINDOW_SIZE[1]), 3)
         pygame.draw.line(screen, WHITE, (0, i * WINDOW_SIZE[1] // BOARD_SIZE), (WINDOW_SIZE[0], i * WINDOW_SIZE[1] // BOARD_SIZE), 3)
 
-# Function to draw the "X" symbol
 def draw_star(x, y):
     x_center = x + WINDOW_SIZE[0] // (2 * BOARD_SIZE)
     y_center = y + WINDOW_SIZE[1] // (2 * BOARD_SIZE)
@@ -62,7 +59,6 @@ def draw_star(x, y):
     pygame.draw.line(screen, WHITE, (x_center - radius, y_center - radius), (x_center + radius, y_center + radius), 5)
     pygame.draw.line(screen, WHITE, (x_center - radius, y_center + radius), (x_center + radius, y_center - radius), 5)
 
-# Function to draw the "O" symbol
 def draw_o(x, y):
     radius = WINDOW_SIZE[0] // (2 * BOARD_SIZE) - 5
     center_x = x + WINDOW_SIZE[0] // (2 * BOARD_SIZE)
