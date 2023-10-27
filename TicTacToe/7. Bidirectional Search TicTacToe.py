@@ -109,39 +109,13 @@ def reset_game():
 COST_X = 1
 COST_O = 2
 
-def computer_move_bidirectional():
-    empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if board[i][j] == ""]
-
-    if empty_cells:
-        best_move = None
-        best_cost = float('inf')
-
-        for cell in empty_cells:
-            row, col = cell
-            if turn == "O":
-                board[row][col] = "O"
-                cost = bidirectional_search(board, "X")
-            else:
-                board[row][col] = "X"
-                cost = bidirectional_search(board, "O")
-            board[row][col] = ""  # Reset the cell
-
-            if cost < best_cost:
-                best_cost = cost
-                best_move = (row, col)
-
-        if best_move:
-            row, col = best_move
-            board[row][col] = "O"  # Make the best move for Player O
-
-# Bidirectional search function
-def bidirectional_search(board, player):
+def bidirectional_search(board, player, from_top):
     if check_win(board, player):
-        return 0
+        return 1
     if check_tie(board):
         return 0
 
-    if player == "O":
+    if from_top:
         best_cost = float('-inf')
     else:
         best_cost = float('inf')
@@ -149,20 +123,43 @@ def bidirectional_search(board, player):
     for i in range(BOARD_SIZE):
         for j in range(BOARD_SIZE):
             if board[i][j] == "":
-                if player == "O":
-                    board[i][j] = "O"
-                    cost = bidirectional_search(board, "X")
+                board[i][j] = player
+                if from_top:
+                    cost = bidirectional_search(board, "X" if player == "O" else "O", not from_top)
                 else:
-                    board[i][j] = "X"
-                    cost = bidirectional_search(board, "O")
+                    cost = bidirectional_search(board, player, not from_top)
                 board[i][j] = ""  # Reset the cell
 
-                if player == "O" and cost > best_cost:
+                if from_top and cost > best_cost:
                     best_cost = cost
-                elif player == "X" and cost < best_cost:
+                elif not from_top and cost < best_cost:
                     best_cost = cost
 
-    return best_cost + (COST_X if player == "X" else COST_O)
+    return best_cost
+
+def computer_move_bidirectional():
+    empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if board[i][j] == ""]
+
+    if empty_cells:
+        best_move = None
+        best_cost = float('-inf')
+
+        for cell in empty_cells:
+            row, col = cell
+            board[row][col] = "O"
+            top_score = bidirectional_search(board, "X", True)
+            board[row][col] = "X"
+            bottom_score = bidirectional_search(board, "O", False)
+            board[row][col] = ""  # Reset the cell
+
+            if top_score + bottom_score > best_cost:
+                best_cost = top_score + bottom_score
+                best_move = (row, col)
+
+        if best_move:
+            row, col = best_move
+            board[row][col] = "O"  # Make the best move for Player O
+
 
 def main():
     global turn, score_X, score_O
