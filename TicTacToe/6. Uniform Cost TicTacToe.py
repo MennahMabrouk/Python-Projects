@@ -2,12 +2,12 @@ import pygame
 import sys
 from collections import deque
 
-# Define colors
 WHITE = (255, 255, 255)
 PURPLE = (128, 0, 128)
 YELLOW = (255, 255, 0)
 
 pygame.init()
+
 WINDOW_SIZE = (400, 450)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Tic Tac Toe")
@@ -15,16 +15,12 @@ pygame.display.set_caption("Tic Tac Toe")
 BOARD_SIZE = 3
 board = [["" for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 
-# Set up the fonts
 score_font = pygame.font.Font(None, 30)
 reset_font = pygame.font.Font(None, 24)
 turn = "X"
-
-# Variables to keep track of player scores
 score_X = 0
 score_O = 0
 
-# Define a cost function for the Tic Tac Toe board
 cost_function = [
     [10, 1, 10],
     [1, 2, 1],  
@@ -110,8 +106,8 @@ def UCS_search(board, player):
         for j in range(BOARD_SIZE):
             if board[i][j] == "":
                 board[i][j] = player
-                cost = calculate_move_cost(board, cost_function)  # Use cost function
-                board[i][j] = ""  # Reset the cell
+                cost = calculate_move_cost(board, cost_function) 
+                board[i][j] = ""  
 
                 if cost < best_cost:
                     best_cost = cost
@@ -141,7 +137,7 @@ def computer_move_ucs():
             else:
                 board[row][col] = "X"
                 cost = UCS_search(board, "O")
-            board[row][col] = ""  # Reset the cell
+            board[row][col] = ""  
 
             if cost < best_cost:
                 best_cost = cost
