@@ -105,8 +105,6 @@ def reset_game():
     draw_score_panel()
     pygame.display.flip()
 
-from collections import deque
-
 def computer_move():
     empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if board[i][j] == ""]
     
