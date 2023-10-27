@@ -115,7 +115,7 @@ def computer_move():
         for cell in empty_cells:
             row, col = cell
             board[row][col] = "O"
-            score = bfs(board, depth=1)
+            score = dfs(board, depth=1)
             board[row][col] = ""  # Reset the cell
 
             if score > best_score:
@@ -126,7 +126,7 @@ def computer_move():
             row, col = best_move
             board[row][col] = "O"
 
-def bfs(board, depth):
+def dfs(board, depth):
     queue = deque([(board, depth)])
     while queue:
         current_board, current_depth = queue.popleft()
