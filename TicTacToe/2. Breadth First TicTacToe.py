@@ -14,23 +14,17 @@ pygame.init()
 WINDOW_SIZE = (400, 450)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Tic Tac Toe")
-
-# Set up the game board
 BOARD_SIZE = 3
 board = [["" for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 
-# Set up the fonts
 score_font = pygame.font.Font(None, 30)
 reset_font = pygame.font.Font(None, 24)
 
 # Variable to keep track of the current player's turn
 turn = "X"
-
-# Variables to keep track of player scores
 score_X = 0
 score_O = 0
 
-# Function to draw the score panel and reset button
 def draw_score_panel():
     score_panel_rect = pygame.Rect(0, 0, WINDOW_SIZE[0], 40)
     pygame.draw.rect(screen, PURPLE, score_panel_rect)
@@ -43,7 +37,6 @@ def draw_score_panel():
     reset_text = reset_font.render("Reset", True, PURPLE)
     screen.blit(reset_text, (WINDOW_SIZE[0] - 75, 12))
 
-# Function to draw the game board
 def draw_board():
     screen.fill(PURPLE)
     draw_grid()
@@ -55,13 +48,11 @@ def draw_board():
             elif board[row][col] == "O":
                 draw_o(col * WINDOW_SIZE[0] // BOARD_SIZE, row * WINDOW_SIZE[1] // BOARD_SIZE)
 
-# Function to draw the grid lines
 def draw_grid():
     for i in range(1, BOARD_SIZE):
         pygame.draw.line(screen, WHITE, (i * WINDOW_SIZE[0] // BOARD_SIZE, 0), (i * WINDOW_SIZE[0] // BOARD_SIZE, WINDOW_SIZE[1]), 3)
         pygame.draw.line(screen, WHITE, (0, i * WINDOW_SIZE[1] // BOARD_SIZE), (WINDOW_SIZE[0], i * WINDOW_SIZE[1] // BOARD_SIZE), 3)
 
-# Function to draw the "X" symbol
 def draw_star(x, y):
     x_center = x + WINDOW_SIZE[0] // (2 * BOARD_SIZE)
     y_center = y + WINDOW_SIZE[1] // (2 * BOARD_SIZE)
@@ -72,14 +63,12 @@ def draw_star(x, y):
     pygame.draw.line(screen, WHITE, (x_center - radius, y_center - radius), (x_center + radius, y_center + radius), 5)
     pygame.draw.line(screen, WHITE, (x_center - radius, y_center + radius), (x_center + radius, y_center - radius), 5)
 
-# Function to draw the "O" symbol
 def draw_o(x, y):
     radius = WINDOW_SIZE[0] // (2 * BOARD_SIZE) - 5
     center_x = x + WINDOW_SIZE[0] // (2 * BOARD_SIZE)
     center_y = y + WINDOW_SIZE[1] // (2 * BOARD_SIZE)
     pygame.draw.circle(screen, WHITE, (center_x, center_y), radius, 3)
 
-# Function to check for a win
 def check_win(board, player):
     for i in range(BOARD_SIZE):
         if all(board[i][j] == player for j in range(BOARD_SIZE)):
@@ -92,11 +81,9 @@ def check_win(board, player):
         return True
     return False
 
-# Function to check for a tie
 def check_tie(board):
     return all(board[i][j] != "" for i in range(BOARD_SIZE) for j in range(BOARD_SIZE))
 
-# Function to reset the game
 def reset_game():
     global board, turn
     board = [["" for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
@@ -104,8 +91,6 @@ def reset_game():
     draw_board()
     draw_score_panel()
     pygame.display.flip()
-
-from collections import deque
 
 def computer_move():
     empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if board[i][j] == ""]
@@ -117,8 +102,8 @@ def computer_move():
         for cell in empty_cells:
             row, col = cell
             board[row][col] = "O"
-            score = bfs(board)
-            board[row][col] = ""  # Reset the cell
+            score = bfs(board, "X", depth=0)  
+            board[row][col] = ""  
 
             if score > best_score:
                 best_score = score
@@ -128,30 +113,36 @@ def computer_move():
             row, col = best_move
             board[row][col] = "O"
 
-def bfs(board):
-    queue = deque([(board, "O")])
-    
-    while queue:
-        current_board, current_player = queue.popleft()
-        
-        if check_win(current_board, "O"):
-            return 1
-        if check_win(current_board, "X"):
-            return -1
-        if check_tie(current_board):
-            return 0
-        
-        empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if current_board[i][j] == ""]
-        
-        for cell in empty_cells:
-            row, col = cell
-            new_board = [row[:] for row in current_board]
-            new_board[row][col] = current_player
-            
-            next_player = "X" if current_player == "O" else "O"
-            queue.append((new_board, next_player))
-    
-    return 0
+
+def bfs(board, current_player, depth):
+    if check_win(board, "O"):
+        return 1
+    if check_win(board, "X"):
+        return -1
+    if check_tie(board):
+        return 0
+
+    if depth % 2 == 0:
+        best_score = float('-inf')
+        for i in range(BOARD_SIZE):
+            for j in range(BOARD_SIZE):
+                if board[i][j] == "":
+                    board[i][j] = current_player
+                    score = bfs(board, "O" if current_player == "X" else "X", depth + 1)
+                    board[i][j] = ""
+                    best_score = max(best_score, score)
+        return best_score
+    else:
+        best_score = float('inf')
+        for i in range(BOARD_SIZE):
+            for j in range(BOARD_SIZE):
+                if board[i][j] == "":
+                    board[i][j] = current_player
+                    score = bfs(board, "O" if current_player == "X" else "X", depth + 1)
+                    board[i][j] = ""
+                    best_score = min(best_score, score)
+        return best_score
+
 
 def main():
     global turn, score_X, score_O
