@@ -105,7 +105,9 @@ def reset_game():
     draw_score_panel()
     pygame.display.flip()
 
-def computer_move_dfs():
+from collections import deque
+
+def computer_move():
     empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if board[i][j] == ""]
     
     if empty_cells:
@@ -115,7 +117,7 @@ def computer_move_dfs():
         for cell in empty_cells:
             row, col = cell
             board[row][col] = "O"
-            score = minimax_dfs(board, 0, False)
+            score = bfs(board, depth=1)
             board[row][col] = ""  # Reset the cell
 
             if score > best_score:
@@ -126,35 +128,31 @@ def computer_move_dfs():
             row, col = best_move
             board[row][col] = "O"
 
-# Modified minimax algorithm with depth-first search
-def minimax_dfs(board, depth, is_maximizing):
-    if check_win(board, "O"):
-        return 1
-    if check_win(board, "X"):
-        return -1
-    if check_tie(board):
-        return 0
+def bfs(board, depth):
+    queue = deque([(board, depth)])
+    while queue:
+        current_board, current_depth = queue.popleft()
 
-    if is_maximizing:
-        best_score = float('-inf')
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == "":
-                    board[i][j] = "O"
-                    score = minimax_dfs(board, depth + 1, False)
-                    board[i][j] = ""
-                    best_score = max(score, best_score)
-        return best_score
-    else:
-        best_score = float('inf')
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == "":
-                    board[i][j] = "X"
-                    score = minimax_dfs(board, depth + 1, True)
-                    board[i][j] = ""
-                    best_score = min(score, best_score)
-        return best_score
+        if check_win(current_board, "O"):
+            return 1
+        if check_win(current_board, "X"):
+            return -1
+        if check_tie(current_board):
+            return 0
+
+        if current_depth < MAX_DEPTH:
+            empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if current_board[i][j] == ""]
+            for cell in empty_cells:
+                row, col = cell
+                new_board = [row[:] for row in current_board]
+                new_board[row][col] = "O" if current_depth % 2 == 1 else "X"
+                queue.append((new_board, current_depth + 1))
+
+    return 0
+
+BOARD_SIZE = 3
+MAX_DEPTH = 9  
+
 def main():
     global turn, score_X, score_O
     computer_turn = False
@@ -191,7 +189,7 @@ def main():
                         computer_turn = True
 
         if computer_turn and turn == "O":
-            computer_move_dfs()
+            computer_move()
             computer_turn = False
 
             if check_win(board, "O"):
