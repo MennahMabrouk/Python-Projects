@@ -105,62 +105,64 @@ def reset_game():
     draw_score_panel()
     pygame.display.flip()
 
-# Function to make a move for the computer player using IDDFS
-def computer_move_iddfs():
+# Define move costs
+COST_X = 1  
+COST_O = 2  
+
+def computer_move_ucs():
     empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if board[i][j] == ""]
     
     if empty_cells:
         best_move = None
+        best_cost = float('inf')
 
-        # Start with a depth of 1 and iteratively increase the depth until a move is found
-        for depth in range(1, BOARD_SIZE**2 + 1):
-            best_score = float('-inf')
-            for cell in empty_cells:
-                row, col = cell
+        for cell in empty_cells:
+            row, col = cell
+            if turn == "O":
                 board[row][col] = "O"
-                score = minimax_iddfs(board, 0, False, depth)
-                board[row][col] = ""  # Reset the cell
+                cost = iddfs(board, "X")
+            else:
+                board[row][col] = "X"
+                cost = iddfs(board, "O")
+            board[row][col] = ""  # Reset the cell
 
-                if score > best_score:
-                    best_score = score
-                    best_move = (row, col)
+            if cost < best_cost:
+                best_cost = cost
+                best_move = (row, col)
 
-            if best_move:
-                row, col = best_move
-                board[row][col] = "O"
-                break
+        if best_move:
+            row, col = best_move
+            board[row][col] = "O"  # Make the best move for Player O
 
-def minimax_iddfs(board, depth, is_maximizing, max_depth):
-    if depth == max_depth or check_win(board, "O") or check_win(board, "X") or check_tie(board):
-        return evaluate(board)
-    
-    if is_maximizing:
-        best_score = float('-inf')
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == "":
-                    board[i][j] = "O"
-                    score = minimax_iddfs(board, depth + 1, False, max_depth)
-                    board[i][j] = ""
-                    best_score = max(score, best_score)
-        return best_score
+# UCS search function
+def iddfs(board, player):
+    if check_win(board, player):
+        return 0
+    if check_tie(board):
+        return 0
+
+    if player == "O":
+        best_cost = float('inf')
     else:
-        best_score = float('inf')
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == "":
-                    board[i][j] = "X"
-                    score = minimax_iddfs(board, depth + 1, True, max_depth)
-                    board[i][j] = ""
-                    best_score = min(score, best_score)
-        return best_score
+        best_cost = float('-inf')
 
-def evaluate(board):
-    if check_win(board, "O"):
-        return 1
-    if check_win(board, "X"):
-        return -1
-    return 0
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            if board[i][j] == "":
+                if player == "O":
+                    board[i][j] = "O"
+                    cost = UCS_search(board, "X")
+                else:
+                    board[i][j] = "X"
+                    cost = UCS_search(board, "O")
+                board[i][j] = ""  # Reset the cell
+
+                if player == "O" and cost < best_cost:
+                    best_cost = cost
+                elif player == "X" and cost > best_cost:
+                    best_cost = cost
+
+    return best_cost + (COST_X if player == "X" else COST_O)
 
 def main():
     global turn, score_X, score_O
@@ -198,7 +200,7 @@ def main():
                         computer_turn = True
 
         if computer_turn and turn == "O":
-            computer_move_iddfs()
+            computer_move_ucs()
             computer_turn = False
 
             if check_win(board, "O"):
