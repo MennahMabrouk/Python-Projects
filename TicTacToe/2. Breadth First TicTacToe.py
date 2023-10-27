@@ -1,6 +1,7 @@
 import pygame
 import sys
 from collections import deque
+import random
 
 # Define colors
 WHITE = (255, 255, 255)
@@ -92,57 +93,20 @@ def reset_game():
     draw_score_panel()
     pygame.display.flip()
 
-def computer_move():
-    empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if board[i][j] == ""]
-    
-    if empty_cells:
-        best_move = None
-        best_score = float('-inf')
+def find_next_empty_space_bfs(board, x, y):
+    visited = [[False for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+    queue = deque([(x, y)])
 
-        for cell in empty_cells:
-            row, col = cell
-            board[row][col] = "O"
-            score = bfs(board, "X", depth=0)  
-            board[row][col] = ""  
+    while queue:
+        cx, cy = queue.popleft()
+        if board[cx][cy] == "":
+            return (cx, cy)
 
-            if score > best_score:
-                best_score = score
-                best_move = (row, col)
-
-        if best_move:
-            row, col = best_move
-            board[row][col] = "O"
-
-
-def bfs(board, current_player, depth):
-    if check_win(board, "O"):
-        return 1
-    if check_win(board, "X"):
-        return -1
-    if check_tie(board):
-        return 0
-
-    if depth % 2 == 0:
-        best_score = float('-inf')
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == "":
-                    board[i][j] = current_player
-                    score = bfs(board, "O" if current_player == "X" else "X", depth + 1)
-                    board[i][j] = ""
-                    best_score = max(best_score, score)
-        return best_score
-    else:
-        best_score = float('inf')
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == "":
-                    board[i][j] = current_player
-                    score = bfs(board, "O" if current_player == "X" else "X", depth + 1)
-                    board[i][j] = ""
-                    best_score = min(best_score, score)
-        return best_score
-
+        for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            nx, ny = cx + dx, cy + dy
+            if 0 <= nx < BOARD_SIZE and 0 <= ny < BOARD_SIZE and not visited[nx][ny]:
+                visited[nx][ny] = True
+                queue.append((nx, ny))
 
 def main():
     global turn, score_X, score_O
@@ -180,24 +144,27 @@ def main():
                         computer_turn = True
 
         if computer_turn and turn == "O":
-            computer_move()
-            computer_turn = False
+                x, y = find_next_empty_space_bfs(board, row, col)
+                if (x, y) is not None:
+                    row, col = x, y
+                    board[row][col] = "O"
 
-            if check_win(board, "O"):
-                score_O += 1
-                winner_text = score_font.render("Player O wins!", True, WHITE)
-                screen.blit(winner_text, (40, WINDOW_SIZE[1] // 2))
-                pygame.display.flip()
-                pygame.time.wait(2000)
-                reset_game()
-            elif check_tie(board):
-                tie_text = score_font.render("It's a tie!", True, WHITE)
-                screen.blit(tie_text, (120, WINDOW_SIZE[1] // 2))
-                pygame.display.flip()
-                pygame.time.wait(2000)
-                reset_game()
-            else:
-                turn = "X"
+                    if check_win(board, "O"):
+                        score_O += 1
+                        winner_text = score_font.render("Player O wins!", True, WHITE)
+                        screen.blit(winner_text, (40, WINDOW_SIZE[1] // 2))
+                        pygame.display.flip()
+                        pygame.time.wait(2000)
+                        reset_game()
+                    elif check_tie(board):
+                        tie_text = score_font.render("It's a tie!", True, WHITE)
+                        screen.blit(tie_text, (120, WINDOW_SIZE[1] // 2))
+                        pygame.display.flip()
+                        pygame.time.wait(2000)
+                        reset_game()
+                    else:
+                        turn = "X"
+                        computer_turn = False
 
         draw_board()
         draw_score_panel()
@@ -207,3 +174,4 @@ if __name__ == "__main__":
     draw_board()
     draw_score_panel()
     main()
+
