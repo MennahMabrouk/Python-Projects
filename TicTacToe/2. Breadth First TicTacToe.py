@@ -117,7 +117,7 @@ def computer_move():
         for cell in empty_cells:
             row, col = cell
             board[row][col] = "O"
-            score = bfs(board, depth=1)
+            score = bfs(board)
             board[row][col] = ""  # Reset the cell
 
             if score > best_score:
@@ -128,30 +128,30 @@ def computer_move():
             row, col = best_move
             board[row][col] = "O"
 
-def bfs(board, depth):
-    queue = deque([(board, depth)])
+def bfs(board):
+    queue = deque([(board, "O")])
+    
     while queue:
-        current_board, current_depth = queue.popleft()
-
+        current_board, current_player = queue.popleft()
+        
         if check_win(current_board, "O"):
             return 1
         if check_win(current_board, "X"):
             return -1
         if check_tie(current_board):
             return 0
-
-        if current_depth < MAX_DEPTH:
-            empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if current_board[i][j] == ""]
-            for cell in empty_cells:
-                row, col = cell
-                new_board = [row[:] for row in current_board]
-                new_board[row][col] = "O" if current_depth % 2 == 1 else "X"
-                queue.append((new_board, current_depth + 1))
-
+        
+        empty_cells = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE) if current_board[i][j] == ""]
+        
+        for cell in empty_cells:
+            row, col = cell
+            new_board = [row[:] for row in current_board]
+            new_board[row][col] = current_player
+            
+            next_player = "X" if current_player == "O" else "O"
+            queue.append((new_board, next_player))
+    
     return 0
-
-BOARD_SIZE = 3
-MAX_DEPTH = 9  
 
 def main():
     global turn, score_X, score_O
